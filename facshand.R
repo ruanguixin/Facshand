@@ -1,6 +1,6 @@
-# This script is design for FACS results handling derived from Flowjo
+# This script is designed for FACS results handling derived from Flowjo
 # Input files: data file exported from Flowjo, cell type file, cell number file, group file
-# Output files: data file containing proportion and cell number columns, studnet t test results file
+# Output files: data file containing proportion and cell number columns, studnet t test results file.
 
 # Path file
 args = commandArgs(T)
@@ -10,7 +10,7 @@ setwd(path)
 library(ggplot2)
 library(Hmisc)
 
-# sample name should be formated as group_number_tissue.fcs
+# sample name should be formated as group_whatever.fcs
 print("Read the input files...")
 rawdata = read.table("rawdata.csv", header = T, sep = ",") 
 colnames(rawdata) = c("Depth", "Name", "Statistic", "Cells")
