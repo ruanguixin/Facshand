@@ -43,7 +43,7 @@ The input files are as follows, keep these files in your path_dir directory.
 
    with two colunms of "tissue" and "number", tissue refers to the exact name of your FACS sample names, and number refers to the cell number (x 10<sup>4</sup>) for caculation; notice that the sample name should be prefixed with group name, eg WT_whatever, ko-whatever.
 
-\* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, and avoid to use symbols like "+" et.al ("_" and "-" does not matter), ignore cases.
+\* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, and avoid to use symbols like "+", "\\" et.al ("_" and "-" does not matter), ignore cases.
 
 ## Output files
 
