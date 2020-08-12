@@ -12,7 +12,16 @@ Facshand script is based on R for statistic and plot of FACS data exported from 
 Rscript path/facshand.R path_dir/
 ```
 
-You should make sure that R has been installed in your OS with ggplot2 and Hmisc packages installed.
+or run the script on R console as the following codes:
+
+```R
+path <- "path_dir"
+source("path/facshand.R", chdir = TRUE)
+```
+
+You can directly drag your script file and directory to the console to acheive the paths.
+
+Make sure that R has been installed in your OS with ggplot2 and Hmisc packages installed.
 
 ## Input files
 
@@ -56,4 +65,4 @@ The output files include
 
 
 
-**20200812_update**: supporting the rawdata files exported from flowjo version <= 10.1; added notices.
+**20200812_update**: support the rawdata files exported from flowjo version <= 10.1, support direct run on R console, add notices.

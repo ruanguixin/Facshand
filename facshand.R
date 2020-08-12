@@ -4,8 +4,13 @@
 
 # Path file
 args = commandArgs(T)
-path = args[1]
-setwd(path)
+path_args = args[1]
+if (is.na(path_args)) {
+  setwd(path)
+  print("Please input path.")
+} else {
+  setwd(path_args)
+}
 
 library(ggplot2)
 library(Hmisc)
