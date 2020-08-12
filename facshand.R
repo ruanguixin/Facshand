@@ -6,8 +6,8 @@
 args = commandArgs(T)
 path_args = args[1]
 if (is.na(path_args)) {
+  print("Please input the right path.")
   setwd(path)
-  print("Please input path.")
 } else {
   setwd(path_args)
 }
