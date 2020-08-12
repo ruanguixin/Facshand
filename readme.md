@@ -6,7 +6,7 @@ Are you bored to do the FACS data statistic post flowjo handling?
 
 ## Quick start
 
-Facshand script is based on R for statistic and plot of FACS data exported from Flowjo (version > 10.0). You can easily caculate and plot your FACS data by typing the following code in your terminal.
+Facshand script is based on R for statistic and plot of FACS data exported from Flowjo. You can easily caculate and plot your FACS data by typing the following code in your terminal.
 
 ```shelll
 Rscript path/facshand.R path_dir/
@@ -32,7 +32,7 @@ The input files are as follows, keep these files in your path_dir directory.
 
 4. cellnumber.csv
 
-   with two colunms of "tissue" and "number", tissue refers to the exact name of your FACS sample names, and number refers to the cell number (x 10<sup>4</sup>) for caculation; notice that the sample name should be prefixed with group name and contains the tissue name, eg WT_whatever, ko-whatever.
+   with two colunms of "tissue" and "number", tissue refers to the exact name of your FACS sample names, and number refers to the cell number (x 10<sup>4</sup>) for caculation; notice that the sample name should be prefixed with group name, eg WT_whatever, ko-whatever.
 
 \* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, and avoid to use symbols like "+" et.al ("_" and "-" does not matter), ignore cases.
 
@@ -52,3 +52,8 @@ The output files include
 
    named by your celltype names in tiff format, including population and cell number caculated dot plots with p-values. The plots may not meet the submission demands, but are enough for the presentation in lab meeting (maybe) :p .
 
+
+
+
+
+**20200812_update**: supporting the rawdata files exported from flowjo version <= 10.1; added notices.

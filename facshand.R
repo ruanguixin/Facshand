@@ -1,6 +1,6 @@
 # This script is designed for FACS results handling derived from Flowjo
 # Input files: data file exported from Flowjo, cell type file, cell number file, group file
-# Output files: data file containing proportion and cell number columns, statistic file, and plot files.
+# Output files: data file containing proportion and cell number columns, studnet t test results file.
 
 # Path file
 args = commandArgs(T)
@@ -11,6 +11,7 @@ library(ggplot2)
 library(Hmisc)
 
 # sample name should be formated as group_whatever.fcs
+print("Read the input files...")
 rawdata = read.table("rawdata.csv", header = T, sep = ",") 
 colnames(rawdata) = c("Depth", "Name", "Statistic", "Cells")
 # celltype should not be identical
@@ -18,6 +19,33 @@ celltype = read.table("celltype.csv", header = T, sep = ",")
 # cell number should be handled as number/10^4 level
 cellnumber = read.table("cellnumber.csv", header = T, sep = ",")
 group = read.table("group.csv", header = T, sep = ",")
+
+# for flowjo version <= 10.1, transform subgating name to full path name
+
+print("Detect the flowjo version...")
+
+if (length(grep("fcs", rawdata[rawdata$Depth == "> ", ]$Name, value = T)) == 0) { # full path detection
+  print("Flowjo version <= 10.1, rawdata handling...")
+  rawdata$Rank = 0
+  for (i in 1:nrow(rawdata)) {
+    n = nchar(as.character(rawdata[i, ]$Depth)) / 2
+    rawdata[i, ]$Rank = n
+  }
+  rawdata$Name = as.character(rawdata$Name)
+  for (i in 1:nrow(rawdata)){
+    rank = rawdata[i, ]$Rank
+    if (rank == 0) {
+      name = rawdata[i, ]$Name
+    }
+    if (rank > 0) {
+      name = as.character(paste(name, rawdata[i, ]$Name, sep = "/"))
+      rawdata[i, ]$Name = name
+    }
+  }
+  write.table(rawdata, "rawdata_full_path.csv", quote = F, sep = ",", col.names = T, row.names = F)
+} else {
+  print("Flowjo version > 10.1, continues...")
+}
 
 # fetch total cell number in fcs files
 fcs = subset(rawdata, rawdata$Depth == "", select = c(Name, Cells))
@@ -67,9 +95,12 @@ for (i in 1:nrow(tissue)){
 colnames(datafinal) = c("name", "group", "celltype", "population", "percentage", "total")
 datafinal$cellnumber = datafinal$percentage*datafinal$total
 
+
+print("Exprot data files...")
 write.table(datafinal, "data.csv", quote = F, row.names = F, col.names = T, sep = ",")
 
 # Plot as dot-errorbar fig
+print("Plotting...")
 ylab = expression(paste("Cell number", " (×", 10^"4", ")", sep = ""))
 
 # Output statistics file
@@ -104,7 +135,6 @@ for (i in 1:nrow(celltype)){
     print(summary(anova1))
   }
 
-
   plot = ggplot(plotdata, aes(group, population)) + 
     geom_point(position= position_jitter(height = 0, width = 0.25), size = 6, alpha = 0.9) +
     stat_summary(fun = "mean", fun.max = "mean", fun.min = "mean", geom = "errorbar", color = "red", size = 2) +
@@ -137,5 +167,5 @@ for (i in 1:nrow(celltype)){
           plot.title = element_text(size = 20, hjust = 0.5))
   ggsave(paste(name_num, ".tiff", sep = ""),  plot_num, device = "tiff", height = 4.86, width = 1.5 * nrow(group))
 }
-
 sink()
+print("Completed :p")
