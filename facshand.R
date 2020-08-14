@@ -19,14 +19,18 @@ library(Hmisc)
 print("Read the input files...")
 rawdata = read.table("rawdata.csv", header = T, sep = ",") 
 colnames(rawdata) = c("Depth", "Name", "Statistic", "Cells")
+rawdata$Name = gsub(" ", "", rawdata$Name)
 # celltype should not be identical
 celltype = read.table("celltype.csv", header = T, sep = ",")
 colnames(celltype) = "celltype"
+celltype$celltype = gsub(" ", "", celltype$celltype)
 # cell number should be handled as number/10^4 level
 cellnumber = read.table("cellnumber.csv", header = T, sep = ",")
 colnames(cellnumber) = c("tissue", "number")
+cellnumber$tissue = gsub(" ", "", cellnumber$tissue)
 group = read.table("group.csv", header = T, sep = ",")
 colnames(group) = "group"
+group$group = gsub(" ", "", group$group)
 
 # for flowjo version <= 10.1, transform subgating name to full path name
 
