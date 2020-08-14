@@ -26,7 +26,7 @@ colnames(celltype) = "celltype"
 cellnumber = read.table("cellnumber.csv", header = T, sep = ",")
 colnames(cellnumber) = c("tissue", "number")
 group = read.table("group.csv", header = T, sep = ",")
-colnmaes(group) = "group"
+colnames(group) = "group"
 
 # for flowjo version <= 10.1, transform subgating name to full path name
 

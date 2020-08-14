@@ -26,6 +26,7 @@ Make sure that R has been installed in your OS with **ggplot2** and **Hmisc** pa
 ```R
 install.packages("ggplot2")
 install.packages("Hmisc")
+install.packages("acepack")
 ```
 
 ## Input files
