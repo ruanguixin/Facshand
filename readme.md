@@ -21,7 +21,12 @@ source("path/facshand.R", chdir = TRUE)
 
 You can directly drag your script file and directory to the console to acheive the paths.
 
-Make sure that R has been installed in your OS with ggplot2 and Hmisc packages installed.
+Make sure that R has been installed in your OS with **ggplot2** and **Hmisc** packages installed.
+
+```R
+install.packages("ggplot2")
+install.packages("Hmisc")
+```
 
 ## Input files
 
@@ -41,9 +46,9 @@ The input files are as follows, keep these files in your path_dir directory.
 
 4. cellnumber.csv
 
-   with two colunms of "tissue" and "number", tissue refers to the exact name of your FACS sample names, and number refers to the cell number (x 10<sup>4</sup>) for caculation; notice that the sample name should be prefixed with group name, eg WT_whatever, ko-whatever.
+   with two colunms of "tissue" and "number", tissue refers to the exact name of your FACS sample names, and number refers to the cell number (x 10<sup>4</sup>) for caculation; notice that the sample name should be **prefixed with group name**, eg WT_whatever, ko-dmso-whatever.
 
-\* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, and avoid to use symbols like "+", "\\" et.al ("_" and "-" does not matter), ignore cases.
+\* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, and **avoid to use symbols like "+", "\\" et.al** ("_" and "-" does not matter), ignore cases.
 
 ## Output files
 
