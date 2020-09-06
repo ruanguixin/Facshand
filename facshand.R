@@ -4,8 +4,13 @@
 
 # Path file
 args = commandArgs(T)
-path = args[1]
-setwd(path)
+path_args = args[1]
+if (is.na(path_args)) {
+  print("Please input the right path.")
+  setwd(path)
+} else {
+  setwd(path_args)
+}
 
 library(ggplot2)
 library(Hmisc)
@@ -14,11 +19,18 @@ library(Hmisc)
 print("Read the input files...")
 rawdata = read.table("rawdata.csv", header = T, sep = ",") 
 colnames(rawdata) = c("Depth", "Name", "Statistic", "Cells")
+rawdata$Name = gsub(" ", "", rawdata$Name)
 # celltype should not be identical
 celltype = read.table("celltype.csv", header = T, sep = ",")
+colnames(celltype) = "celltype"
+celltype$celltype = gsub(" ", "", celltype$celltype)
 # cell number should be handled as number/10^4 level
 cellnumber = read.table("cellnumber.csv", header = T, sep = ",")
+colnames(cellnumber) = c("tissue", "number")
+cellnumber$tissue = gsub(" ", "", cellnumber$tissue)
 group = read.table("group.csv", header = T, sep = ",")
+colnames(group) = "group"
+group$group = gsub(" ", "", group$group)
 
 # for flowjo version <= 10.1, transform subgating name to full path name
 
@@ -42,7 +54,7 @@ if (length(grep("fcs", rawdata[rawdata$Depth == "> ", ]$Name, value = T)) == 0) 
       rawdata[i, ]$Name = name
     }
   }
-  write.table(rawdata, "rawdata_full_path.csv", quote = F, sep = ",", col.names = T, row.names = F)
+  # write.table(rawdata, "rawdata_full_path.csv", quote = F, sep = ",", col.names = T, row.names = F)
 } else {
   print("Flowjo version > 10.1, continues...")
 }
