@@ -39,17 +39,17 @@ The input files are as follows, keep these files in your path_dir directory.
 
 2. celltype.csv 
 
-   with the header of "celltype", input the exact names of the subsets to be calculated; *
+   with the header of "celltype", input the **exact names** of the subsets to be calculated; 
 
 3.  group.csv
 
-   with the header of "group", input the exact names of your groups;
+   with the header of "group", input the **exact names** of your groups;
 
 4. cellnumber.csv
 
    with two colunms of "tissue" and "number", tissue refers to the exact name of your FACS sample names, and number refers to the cell number (x 10<sup>4</sup>) for caculation; notice that the sample name should be **prefixed with group name**, eg WT_whatever, ko-dmso-whatever.
 
-\* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, and **avoid to use symbols like "+", "\\" et.al** ("_" and "-" does not matter), ignore cases.
+\* make sure that your subset names are not duplicated, even partially duplicated names are not allowed, ignore cases.
 
 ## Output files
 
@@ -69,6 +69,6 @@ The output files include
 
 
 
-
+**20200923_update**: modify to make x axis display as the same sequence as group.csv shown, modify to tolerate the most frequently used symbol in FACS gating "+".
 
 **20200812_update**: support the rawdata files exported from flowjo version <= 10.1, support direct run on R console, add notices.

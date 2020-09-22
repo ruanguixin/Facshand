@@ -24,6 +24,9 @@ rawdata$Name = gsub(" ", "", rawdata$Name)
 celltype = read.table("celltype.csv", header = T, sep = ",")
 colnames(celltype) = "celltype"
 celltype$celltype = gsub(" ", "", celltype$celltype)
+# recognize "+" which is most frequently used in FACS gating
+celltype$celltype = gsub("\\+", "\\\\+", celltype$celltype)
+celltype
 # cell number should be handled as number/10^4 level
 cellnumber = read.table("cellnumber.csv", header = T, sep = ",")
 colnames(cellnumber) = c("tissue", "number")
@@ -66,11 +69,13 @@ fcstotal = as.data.frame(fcs$Cells)
 
 # sort treated groups
 rawdata1 = data.frame()
+groupname = c()
 for (i in 1:nrow(group)){
   group_sort = paste("group", i, sep = "")
   group_sort = rawdata[grep(group[i, ], rawdata$Name, ignore.case = T), ]
   group_sort$group = rep(paste(group[i, ]), nrow(group_sort))
   rawdata1 = rbind(rawdata1, group_sort)
+  groupname = c(groupname, group[i, ])
 }
 
 # sort celltype
@@ -113,7 +118,7 @@ write.table(datafinal, "data.csv", quote = F, row.names = F, col.names = T, sep 
 
 # Plot as dot-errorbar fig
 print("Plotting...")
-ylab = expression(paste("Cell number", " (×", 10^"4", ")", sep = ""))
+ylab = expression(paste("Cell number", " (x", 10^"4", ")", sep = ""))
 
 # Output statistics file
 sink("statistic.txt")
@@ -146,6 +151,9 @@ for (i in 1:nrow(celltype)){
     p_num = signif(summary(anova1)[[1]][, "Pr(>F)"][1], 2)
     print(summary(anova1))
   }
+  
+  # x axis shown the same sequence as group.csv displays
+  plotdata$group = factor(plotdata$group, levels = groupname)
 
   plot = ggplot(plotdata, aes(group, population)) + 
     geom_point(position= position_jitter(height = 0, width = 0.25), size = 6, alpha = 0.9) +
